@@ -1,76 +1,148 @@
-# Project Context
+# Project Context — Gym Class Reservation SDET Assessment
 
-This is an individual SDET assessment project for the Gym Class Reservation
-web application.
+## Project Purpose
+
+This is an individual SDET (Software Development Engineer in Test) assessment project for the Gym Class Reservation web application. The assessment focuses on requirements analysis and test design without implementation.
+
+## SDET Assessment Scope
 
 The SDET task is to:
 
-- analyze the application requirements;
-- identify areas suitable for automation;
-- select a small meaningful automation subset;
-- create an automated-test design specification for that subset.
+1. Analyze the application requirements for areas suitable for automated testing.
+2. Identify behavior types to test (positive, negative, boundary, calculation, state-transition).
+3. Select a small meaningful automation subset proportional to the application scope.
+4. Create a detailed automated-test design specification for the selected subset.
 
-Implementation and execution of automated tests are not required.
+**Out of scope:** Implementation, execution, or demonstration of automated tests; inventing technical details not present in requirements.
 
 ## Sources of Truth
 
-`BRD.md` is the authoritative business source.
+**BRD.md** is the authoritative business source. All other project documents are derived from or validated against the BRD.
 
-`REQUIREMENTS.md` is the project working representation derived from `BRD.md`.
+**REQUIREMENTS.md** is the verified working representation of BRD.md requirements. It has been reviewed for:
+- Faithful preservation of all required business behavior, numeric values, and scope boundaries.
+- Correct requirement modality (should vs. must).
+- Clear distinction between requirements and technical unknowns.
 
-If `REQUIREMENTS.md` conflicts with `BRD.md`, the BRD remains authoritative
-unless a human-approved requirement change exists.
+If REQUIREMENTS.md conflicts with BRD.md, the BRD remains authoritative unless a human-approved requirement change exists.
 
-Do not invent requirements.
+## Project Artifacts
 
-If behavior is unclear or not defined, identify it as an ambiguity or technical
-assumption instead of treating an assumption as a requirement.
+### BRD.md
+Business Requirements Document. Authoritative source defining:
+- Application purpose and intended user
+- Available classes and pricing
+- Session data and capacity
+- Reservation flow and behavior
+- Validation and scope boundaries
 
-## Project Structure
+### REQUIREMENTS.md
+Working requirements representation. Derived from BRD.md with:
+- Organized sections for functional areas and behavior types
+- Preserved business values (all prices, sessions, availability, limits)
+- Clear requirement strength language (should vs. must)
+- Identification of ambiguities rather than silent resolution
+- Human-verified alignment to the BRD
 
-- Business source: `BRD.md`
-- Working requirements: `REQUIREMENTS.md`
-- Assessment prompts: `PROMPTS.md`
-- SDET test analysis: `TEST_ANALYSIS.md`
-- Automated-test design specification: `AUTOMATION_DESIGN.md`
+### TEST_ANALYSIS.md
+SDET requirements analysis. Identifies:
+- Functional areas suitable for automation (9 areas analyzed)
+- Behavior dimensions (positive, negative, boundary, calculation, state-transition)
+- Five automation scenarios selected for the focused subset
+- Valid requirements intentionally left outside the initial subset (with rationale)
+- Technical unknowns that cannot be derived from requirements (18 identified)
 
-## SDET Working Rules
+### AUTOMATION_DESIGN.md
+Automated-test design specification. Provides detailed design for each of the five selected scenarios:
+- Test objective and requirements coverage
+- Concrete test data sourced from REQUIREMENTS.md
+- Preconditions and test flow
+- Expected results and assertions
+- State considerations and technical unknowns
 
-- Keep the work proportional to this small application.
-- Base test analysis and automation design on confirmed requirements.
+Also includes:
+- Proposed automation architecture and project structure
+- Selector/locator strategy at conceptual level (no specific selectors prescribed)
+- Synchronization and wait approach
+- Test independence and browser session state handling
+- Information that must be confirmed before implementation
+
+## Selected Automation Subset
+
+Five scenarios were selected for automation design:
+
+1. **Scenario A: Happy Path** — Complete valid reservation end-to-end
+2. **Scenario B: Participant Count Boundaries** — Validate minimum, invalid, and excess counts
+3. **Scenario C: Full Session Prevention** — Verify full sessions cannot be reserved
+4. **Scenario D: Price Calculation** — Verify price formula across all classes
+5. **Scenario E: Availability Persistence** — Verify availability decreases and persists across reservations
+
+See TEST_ANALYSIS.md for rationale and coverage analysis.
+
+## Working Boundaries & Constraints
+
+### Requirements & Behavior
+- Do not invent requirements or behavior.
+- If behavior is unclear or undefined, identify it as an ambiguity or technical unknown rather than assuming it.
 - Distinguish required behavior from technical assumptions.
-- Prefer a small meaningful automation subset over exhaustive coverage.
-- Include positive, negative, boundary, state-transition, and calculation
-  behavior where relevant during analysis.
-- Do not implement automated tests unless explicitly requested.
-- Do not claim that automated tests were executed.
-- Do not invent application URLs, selectors, DOM structure, or implementation
-  details.
-- Keep technical assumptions visible in the automation design.
-- Do not modify `BRD.md`.
+- Preserve all numeric values, scope boundaries, and requirement strength from the BRD.
 
-## Proposed Automation Technology
+### Technical Details
+- Do not invent application URLs, selectors, DOM structure, control types, exact message text, or implementation details.
+- Where the BRD defines an outcome but not the UI mechanism, describe the business outcome rather than assuming how the UI implements it.
+- Keep technical assumptions visible and clearly documented.
+- Document unknowns that cannot be resolved without seeing the application implementation.
 
-For the automation design, assume the following familiar SDET stack unless
-there is a reason to propose otherwise:
+### Scope & Proportionality
+- Keep all work proportional to this small, focused application.
+- Prefer small meaningful subsets over exhaustive coverage.
+- Avoid over-engineering for a simple reservation form and business logic.
 
-- Java
-- Selenium WebDriver
-- Cucumber
-- TestNG
-- Maven
+### Documentation
+- Do not implement or execute automated tests.
+- Do not claim tests were executed or demonstrate test runs.
+- Do not modify BRD.md or other completed project artifacts.
+- Keep CLAUDE.md focused on stable project guidance, not temporary task instructions.
 
-This is a proposed design technology only. No automation implementation is
-required for this assessment.
+## Proposed Automation Technology Stack
 
-## Checking
+For automated-test design and future implementation, assume the following familiar stack unless there is a reason to propose otherwise:
 
-Claude Code output must be reviewed against `BRD.md`.
+- **Language:** Java
+- **Web Automation:** Selenium WebDriver
+- **Test Scenarios:** Cucumber (Gherkin syntax)
+- **Test Runner:** TestNG
+- **Build & Dependency Management:** Maven
 
-A document is not accepted merely because Claude Code says it is complete.
+This is a proposed design technology only. Implementation decisions may differ. The stack was chosen for familiarity and industry prevalence, not because it is prescribed by the BRD.
 
-Before accepting:
-- verify that requirements are faithfully represented;
-- verify that selected automation scenarios map to actual requirements;
-- verify that assumptions are clearly labeled;
-- verify that no unsupported behavior has been invented.
+## Handling Unknown Implementation Details
+
+The BRD does not prescribe technical implementation. When implementation details are unknown:
+
+1. **Document the unknown.** Record exactly what information is needed (e.g., "How is participant count input?").
+2. **Do not assume.** Do not invent a UI mechanism, control type, or behavior.
+3. **Describe the business outcome.** Focus on the requirement (e.g., "Participant count below 1 is invalid") rather than the UI mechanism.
+4. **Keep unknowns visible.** Maintain a clear list in the design document (see AUTOMATION_DESIGN.md "Information That Must Be Confirmed Before Implementation").
+
+Unknown details that must be confirmed before implementation include:
+- Application URL and deployment environment
+- HTML structure, element IDs, and CSS class naming
+- Control types (dropdown, spinner, text field, buttons, etc.)
+- Exact text of validation messages, confirmation messages, or feedback
+- Navigation and state-management approach
+- Browser session state persistence mechanism
+
+## Verification & Acceptance Criteria
+
+Claude Code output must be reviewed against BRD.md and REQUIREMENTS.md before acceptance.
+
+**A document is not accepted merely because Claude Code says it is complete.**
+
+Before accepting any artifact:
+
+1. **Faithfulness:** Verify that all required business behavior, numeric values, and scope boundaries are preserved exactly from the BRD/REQUIREMENTS.md.
+2. **Traceability:** For TEST_ANALYSIS.md and AUTOMATION_DESIGN.md, verify that selected scenarios map to actual requirements and that rationale is clear.
+3. **Technical Honesty:** Verify that unknowns are clearly labeled, assumptions are explicit, and no unsupported behavior has been invented.
+4. **Proportionality:** Verify that analysis and design remain proportional to this small application.
+5. **No Invention:** Verify that no application URLs, selectors, DOM structure, exact message text, or implementation details are prescribed.

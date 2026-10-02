@@ -445,8 +445,61 @@ After editing, report only the four corrections made.
 ...
 ```
 
-## Prompt 10: SDET
+## Prompt 10: SDET Claude.md Update
 ```Text
+
+Review and update CLAUDE.md for this SDET assessment project.
+
+Before editing, read:
+
+- BRD.md
+- REQUIREMENTS.md
+- TEST_ANALYSIS.md
+- AUTOMATION_DESIGN.md
+
+Update CLAUDE.md so that it contains only stable project guidance that would be useful in future Claude Code interactions.
+
+CLAUDE.md should clearly define:
+
+- the project purpose;
+- the SDET assessment role and expected deliverables;
+- BRD.md as the authoritative business source;
+- REQUIREMENTS.md as the reviewed working representation of the BRD;
+- the purpose of TEST_ANALYSIS.md;
+- the purpose of AUTOMATION_DESIGN.md;
+- the project file structure;
+- important working boundaries;
+- the proposed automation stack:
+  Java, Selenium WebDriver, Cucumber, TestNG, Maven;
+- rules for handling unknown implementation details;
+- rules for checking Claude Code output before accepting it.
+
+Important constraints:
+
+- Keep CLAUDE.md concise and project-level.
+- Do not duplicate detailed content from TEST_ANALYSIS.md or AUTOMATION_DESIGN.md.
+- Do not copy individual test scenarios into CLAUDE.md.
+- Do not include temporary task instructions or prompt history.
+- Do not invent application URLs, selectors, DOM structure, control types, or implementation details.
+- Do not state that automated tests were implemented or executed.
+- Do not modify BRD.md or any other project file.
+- Preserve the distinction between business requirements and technical design decisions.
+- If REQUIREMENTS.md conflicts with BRD.md, BRD.md remains authoritative.
+- Unknown behavior should be identified as an ambiguity or technical unknown, not silently assumed.
+
+Keep the document proportional to this small assessment project.
+
+After updating CLAUDE.md, report:
+1. what sections were added or changed;
+2. what content was intentionally excluded because it belongs in another artifact;
+3. whether any existing CLAUDE.md guidance conflicted with the current project state.
+
+...
+```
+
+## Prompt 11:
+```Text
+
 
 
 
